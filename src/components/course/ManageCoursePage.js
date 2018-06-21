@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as courseActions from '../../actions/courseActions';
 import CourseForm from './CourseForm';
 import authorApi from '../../api/mockAuthorApi';
+import toastr from 'toastr';
 
 class ManageCoursePage extends React.Component {
   constructor(props, context) {
@@ -10,7 +11,7 @@ class ManageCoursePage extends React.Component {
     this.state = {
       course: Object.assign({}, props.course),
       errors: {},
-      authors: authorApi.getAllAuthors().then(authors => this.setState({authors: authors}))
+      loading: false
     };
 
     this.updateCourseState = this.updateCourseState.bind(this);
@@ -35,8 +36,20 @@ class ManageCoursePage extends React.Component {
 
   saveCourse(evt) {
     evt.preventDefault();
-    this.props.saveCourse(this.state.course);
-    this.context.router.push('/courses');
+    this.setState({loading: true});
+    this.props.saveCourse(this.state.course)
+    .then(() => this.redirect())
+    .catch(error => {
+        toastr.error(error);
+        this.setState({loading: false});
+
+    });
+  }
+
+  redirect(){
+    this.setState({loading: false});
+    toastr.success('Course Saved!');
+    this.context.router.push('/courses'); 
   }
 
   render() {
@@ -46,7 +59,8 @@ class ManageCoursePage extends React.Component {
         onChange={this.updateCourseState}
         onSave={this.saveCourse}
         course={this.state.course}
-        errors={this.state.errors}/>
+        errors={this.state.errors}
+        loading={this.state.loading}/>
     );
   }
 }

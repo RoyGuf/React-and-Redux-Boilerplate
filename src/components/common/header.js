@@ -6,11 +6,11 @@ const Header = () => {
         /*To add another link to the navigation header you need to
         specify a <Link> with the path name similar to the path name in routes */
         <nav>
-            <IndexLink to='/' activeClassname='active'>Home</IndexLink>
+            <IndexLink to='/' activeClassName='active'>Home</IndexLink>
             {" | "}
-            <Link to='/courses' activeClassname='active'>Courses</Link>
+            <Link to='/courses' activeClassName='active'>Courses</Link>
             {" | "}
-            <Link to='/about' activeClassname='active'>About</Link>
+            <Link to='/about' activeClassName='active'>About</Link>
         </nav>
     );
 };
