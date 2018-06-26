@@ -5,7 +5,7 @@ import CourseForm from './CourseForm';
 import authorApi from '../../api/mockAuthorApi';
 import toastr from 'toastr';
 
-class ManageCoursePage extends React.Component {
+export class ManageCoursePage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -32,10 +32,24 @@ class ManageCoursePage extends React.Component {
     this.setState({
       course: course
     });
+  
+    }
+  courseFormIsValid() {
+    let formIsValid = true;
+    let errors = {};
+    if(this.state.course.title.length < 5){
+        errors.title = 'Title must be at least 5 characters';
+        formIsValid = false;
+    }
+    this.setState({errors: errors});
+    return formIsValid;
   }
 
   saveCourse(evt) {
     evt.preventDefault();
+    if(!this.courseFormIsValid()){
+        return;
+    }
     this.setState({loading: true});
     this.props.saveCourse(this.state.course)
     .then(() => this.redirect())
