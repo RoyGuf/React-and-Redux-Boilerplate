@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "6.8.0",
+    "body-parser": "^1.18.3",
     "bootstrap": "3.3.6",
     "jquery": "2.2.3",
     "mongoose": "^5.1.6",

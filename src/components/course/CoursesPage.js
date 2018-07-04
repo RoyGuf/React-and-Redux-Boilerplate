@@ -16,16 +16,20 @@ class CoursesPage extends React.Component{
         this.redirectToAddCoursePage = this.redirectToAddCoursePage.bind(this);
     }
 
-
+    componentDidMount() {
+        this.props.loadCourses();
+    }
     redirectToAddCoursePage() {
-        browserHistory.push('/course');
+        browserHistory.push('/course/');
     }
 
     render(){
+        const courses = [...this.props.courses];
         return(
             <div className='jumotron'>
                 <h1>Courses</h1>
                 <CourseList courses={this.props.courses} />
+                <hr style={{paddingTop: 100}}/>
                 <h2>Add Course</h2>
                 <input
                     type='submit'
@@ -38,7 +42,8 @@ class CoursesPage extends React.Component{
 }
 
 CoursesPage.propTypes = {
-    
+    deleteCourse: PropTypes.func.isRequired,
+    loadCourses: PropTypes.func.isRequired,
     courses: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };
@@ -51,6 +56,8 @@ function mapStateToProps(state, ownProps){
 
 function mapDispatchToProps(dispatch){
     return {
+      deleteCourse: (course)=>dispatch(courseActions.deleteCourse(course)),
+      loadCourses: ()=>dispatch(courseActions.loadCourses()),
       actions: bindActionCreators(courseActions, dispatch)  
     };
 }

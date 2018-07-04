@@ -14,7 +14,7 @@ React and NodeJs boilerplate. The boilerplate includes:
  You can download MongoDb from:
  'https://www.mongodb.com/'
  
- and NodeJS from:
+ And NodeJS from:
  https://nodejs.org/en/
  
  Then follow those easy steps:

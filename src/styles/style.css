@@ -10,6 +10,16 @@ a.active {
     color: orangered;
 }
 
+a.active:hover {
+    color: orangered;
+}
+
+
 nav {
     padding-top: 20px;
+}
+
+.dot {
+    font-family: 'Gamja Flower', cursive;
+    font-size: 150%;
 }

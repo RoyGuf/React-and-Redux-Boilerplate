@@ -2,14 +2,14 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as courseActions from '../../actions/courseActions';
 import CourseForm from './CourseForm';
-import authorApi from '../../api/mockAuthorApi';
 import toastr from 'toastr';
+import {browserHistory} from 'react-router';
 
 export class ManageCoursePage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      course: Object.assign({}, props.course),
+      course: Object.assign({}, this.props.course),
       errors: {},
       loading: false
     };
@@ -19,7 +19,7 @@ export class ManageCoursePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.course.id !== nextProps.course.id) {
+    if (this.props.course._id !== nextProps.course._id) {
       // Necessary to update form when existing course is loading directly
       this.setState({course: Object.assign({}, nextProps.course)});
     }
@@ -27,7 +27,7 @@ export class ManageCoursePage extends React.Component {
 
   updateCourseState(evt) {
     const field = evt.target.name;
-    let course = Object.assign({}, this.state.course);
+    let course = this.state.course;
     course[field] = evt.target.value;
     this.setState({
       course: course
@@ -63,7 +63,7 @@ export class ManageCoursePage extends React.Component {
   redirect(){
     this.setState({loading: false});
     toastr.success('Course Saved!');
-    this.context.router.push('/courses'); 
+    browserHistory.push('/courses'); 
   }
 
   render() {
@@ -91,14 +91,14 @@ ManageCoursePage.contextTypes = {
 };
 
 function getCourseById(courses, courseId) {
-  const course = courses.find(course => course.id === courseId);
+  const course = courses.find(course => String(course._id) === courseId);
   if (course) return course;
   return null;
 }
 
 function mapStateToProps(state, ownProps) {
   const courseId = ownProps.params.id; // from the path '/course/:id'
-  let course = {id: '', watchHref: '', title: '', authorId: '', length: '', category: ''};
+  let course = { watchHref: '', title: '', authorId: '', length: '', category: ''};
 
   if (courseId && state.courses.length > 0) {
     course = getCourseById(state.courses, courseId);
