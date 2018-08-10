@@ -1,6 +1,6 @@
-# H1 MERN Stack - React-and-Redux-Boilerplate
+# MERN Stack - React-and-Redux-Boilerplate
 ___
-# H2 M.E.R.N = MongoDB, Express, React, NodeJS
+## M.E.R.N = MongoDB, Express, React, NodeJS
 ___
 
 MERN Stack boilerplate. The boilerplate includes:
